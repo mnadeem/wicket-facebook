@@ -15,20 +15,17 @@ public class FacebookClient {
 	public static final Token EMPTY_TOKEN 				= null;
 	
 	private final OAuthService service;
-	private final String accessToken;
+	private final String oauthVerifier;
 
 	public FacebookClient(OAuthService newService, String accessToken) {
 		this.service = newService;
-		this.accessToken = accessToken;
+		this.oauthVerifier = accessToken;
 	}
 
-	public <T> T fetch(Verb verb, String what, Class<T> classOfT) {
+	public <T> T fetch(Verb how, String what, Class<T> classOfT) {
 
-		Verifier verifier = new Verifier(accessToken);
-		Token accessToken = service.getAccessToken(EMPTY_TOKEN, verifier);
-
-		// getting user profile
-		OAuthRequest oauthRequest = new OAuthRequest(verb, FACEBOOK_GRAPH_API_URL + what);
+		Token accessToken 			= service.getAccessToken(EMPTY_TOKEN,  new Verifier(oauthVerifier));
+		OAuthRequest oauthRequest 	= new OAuthRequest(how, FACEBOOK_GRAPH_API_URL + what);
 		service.signRequest(accessToken, oauthRequest);
 
 		Response oauthResponse = oauthRequest.send();

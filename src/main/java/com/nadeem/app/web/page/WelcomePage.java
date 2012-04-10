@@ -10,11 +10,7 @@ public class WelcomePage extends BasePage {
     public WelcomePage(final PageParameters parameters) {
     	super(parameters);
     	
-    	if (getLoggedInUser() == null) {
-    		setResponsePage(LoginPage.class);
-		} else {
-			add(new Label("facebookUser", getLoggedInUser().getFirstName()));
-		}
+    	add(new Label("facebookUser", getLoggedInUser().getFirstName()));		
     	
     }
 }
