@@ -25,11 +25,11 @@
  		</init-param>
  		<init-param>
  			<param-name>appKey</param-name>
- 			<param-value>355784961124762</param-value>
+ 			<param-value>{Your Appkey}</param-value>
  		</init-param>
  		<init-param>
  			<param-name>secret</param-name>
- 			<param-value>f4cecac057e4c38e5ab1e3e90448fc2b</param-value>
+ 			<param-value>{Your Seceret}</param-value>
  		</init-param>
  		<init-param>
  			<param-name>callback</param-name>
