@@ -5,7 +5,7 @@ import org.apache.wicket.markup.html.WebPage;
 
 import com.nadeem.app.model.User;
 import com.nadeem.app.web.FacebookSession;
-import com.nadeem.app.web.WicketApplication;
+import com.nadeem.app.web.FacebookApplication;
 
 public class BasePage extends WebPage {
 	
@@ -24,8 +24,8 @@ public class BasePage extends WebPage {
 		return (FacebookSession) getSession();
 	}
 	
-	public WicketApplication getWebApplication() {
-		return (WicketApplication) super.getApplication();
+	public FacebookApplication getWebApplication() {
+		return (FacebookApplication) super.getApplication();
 	}
 
 }

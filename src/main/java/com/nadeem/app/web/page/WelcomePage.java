@@ -10,7 +10,8 @@ public class WelcomePage extends BasePage {
     public WelcomePage(final PageParameters parameters) {
     	super(parameters);
     	
-    	add(new Label("facebookUser", getLoggedInUser().getFirstName()));		
-    	
+    	getSession().bind();
+    	add(new Label("facebookUser", getLoggedInUser().getFirstName()));
+
     }
 }
