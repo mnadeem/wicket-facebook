@@ -2,11 +2,11 @@ package com.nadeem.app.model;
 
 import java.util.List;
 
-public class Freinds {
+public class Friends {
 
 	private List<Friend> data;
 
-	public final List<Friend> getData() {
+	public final List<Friend> all() {
 		return data;
 	}
 

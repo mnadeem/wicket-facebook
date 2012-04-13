@@ -9,6 +9,7 @@ import org.scribe.oauth.OAuthService;
 
 import com.google.gson.Gson;
 import com.nadeem.app.exception.OAuthException;
+import com.nadeem.app.model.Friends;
 import com.nadeem.app.model.OauthErrorMap;
 import com.nadeem.app.model.User;
 
@@ -29,8 +30,8 @@ public class FacebookClient {
 		return fetch(Verb.GET, FacebookObject.ME, User.class);
 	}
 
-	public final User getFreinds() {
-		return fetch(Verb.GET, FacebookObject.FREINDS, User.class);
+	public final Friends getFriends() {
+		return fetch(Verb.GET, FacebookObject.FRIENDS, Friends.class);
 	}
 
 	public final <T> T fetch(final Verb how, final FacebookObject what, final Class<T> classOfT) {

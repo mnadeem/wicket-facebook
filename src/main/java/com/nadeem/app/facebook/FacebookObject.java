@@ -2,7 +2,7 @@ package com.nadeem.app.facebook;
 
 public enum FacebookObject {
 
-	ME("/me"), FREINDS("/me/friends"), GROUPS("/me/groups");
+	ME("/me"), FRIENDS("/me/friends"), GROUPS("/me/groups");
 
 	private String path;
 

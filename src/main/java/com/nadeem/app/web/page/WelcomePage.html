@@ -8,7 +8,16 @@
 		<section id="content" class="cf">
 			
 			<h2 class="head">Homepage</h2>
-			<h3> Hello <span wicket:id="facebookUser"> </span> </h3>	
+			<h3> Hello <span wicket:id="facebookUser"> </span> </h3>
+			
+			<h4> Here are your friends</h4>
+			
+			<table border="1">
+				<tr wicket:id="friends">
+					<td style="padding: 5px;margin: 5px;"><span wicket:id="id"></span></td>
+					<td style="padding: 5px;margin: 5px;"><span wicket:id="name"></span></td>
+				</tr>
+			</table>
 
 		</section>
 	</wicket:extend>
