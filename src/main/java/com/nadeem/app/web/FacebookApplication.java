@@ -10,7 +10,6 @@ import org.apache.wicket.Response;
 import org.apache.wicket.Session;
 import org.apache.wicket.authorization.IUnauthorizedComponentInstantiationListener;
 import org.apache.wicket.authorization.UnauthorizedInstantiationException;
-import org.apache.wicket.authorization.strategies.page.AbstractPageAuthorizationStrategy;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WebRequest;
@@ -46,7 +45,7 @@ public class FacebookApplication extends WebApplication implements IUnauthorized
 		super.init();
 		initOauthService();
 
-		initAuthorizationStrategy();
+		getSecuritySettings().setAuthorizationStrategy(new FacebookPageAuthorizationStrategy());
 		getSecuritySettings().setUnauthorizedComponentInstantiationListener(this);
 
 		mountFreindlyUrls();
@@ -55,23 +54,8 @@ public class FacebookApplication extends WebApplication implements IUnauthorized
 
 	private void initOauthService() {
 		OAuthServiceProvider provider 	= new OAuthServiceProvider(new OAuthServiceConfig(getAppKey(), getSecret(), getCallback(), FacebookApi.class));
-		oauthService 					= provider.getService();
+		this.oauthService 				= provider.getService();
 	}
-
-	private void initAuthorizationStrategy() {
-		getSecuritySettings().setAuthorizationStrategy(new AbstractPageAuthorizationStrategy() {
-			@Override
-			protected <T extends Page> boolean isPageAuthorized(final Class<T> pageClass) {
-
-				if (((FacebookSession)Session.get()).isSessionValid()) {
-					return true;
-				}
-
-				return false;
-			}
-		});
-	}
-
 
 	private void mountFreindlyUrls() {
 		mountBookmarkablePage("/facebook-callback/", WelcomePage.class);
@@ -116,14 +100,14 @@ public class FacebookApplication extends WebApplication implements IUnauthorized
 	private FacebookClient getSignedClient(final Request request) {
 		String oauthVerifier = request.getParameter("code");
 		if (oauthVerifier != null) {
-			return new FacebookClient(oauthService, oauthVerifier);
+			return new FacebookClient(this.oauthService, oauthVerifier);
 		} else {
 			throw new FailedLoginException();
 		}
 	}
 
 	private void forceLogin(final Page page) {
-		throw new RedirectToUrlException(oauthService.getAuthorizationUrl(FacebookClient.EMPTY_TOKEN));
+		throw new RedirectToUrlException(this.oauthService.getAuthorizationUrl(FacebookClient.EMPTY_TOKEN));
 	}
 
 	public final OAuthService getOauthService() {
