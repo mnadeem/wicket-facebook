@@ -39,10 +39,10 @@ public class User implements Serializable {
 	public void setOauthVerifier(String oauthVerifier) {
 		this.oauthVerifier = oauthVerifier;
 	}
-	
+
 	@Override
 	public String toString() {
 		return String.format("User[%s , %s, %s , %s]", userId, firstName, lastName, oauthVerifier);
 	}
-	
+
 }

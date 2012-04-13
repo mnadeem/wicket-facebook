@@ -6,21 +6,21 @@ public class OAuthException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	private OAuthError oAuthError;
-	
-	public OAuthException(OAuthError oAuthError) {
+
+	public OAuthException(final OAuthError oAuthError) {
 		super(oAuthError.getMessage());
 		this.oAuthError = oAuthError;
 	}
 
-	public OAuthError getoAuthError() {
+	public final OAuthError getoAuthError() {
 		return oAuthError;
 	}
 
-	public void setoAuthError(OAuthError oAuthError) {
+	public final void setoAuthError(final OAuthError oAuthError) {
 		this.oAuthError = oAuthError;
 	}
-	
-	public boolean isOAuthException() {
+
+	public final boolean isOAuthException() {
 		if (oAuthError != null && "OAuthException".equalsIgnoreCase(oAuthError.getType())) {
 			return true;
 		}

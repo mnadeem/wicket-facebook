@@ -9,24 +9,24 @@ public class OauthErrorMap implements Serializable {
 	private Map<String, String> error = null;
 
 
-	public void setError(Map<String, String> error) {
+	public final void setError(final Map<String, String> error) {
 		this.error = error;
 	}
-	
-	public OAuthError buildOAuthError() {
-		if (error != null) {
+
+	public final OAuthError buildOAuthError() {
+		if (this.error != null) {
 			OAuthError oAuthError = new OAuthError();
-			oAuthError.setCode(error.get("code"));
-			oAuthError.setMessage(error.get("message"));
-			oAuthError.setType(error.get("type"));
-			
+			oAuthError.setCode(this.error.get("code"));
+			oAuthError.setMessage(this.error.get("message"));
+			oAuthError.setType(this.error.get("type"));
+
 			return oAuthError;
 		}
 		return null;
 	}
 
 	@Override
-	public String toString() {
-		return String.format("OauthErrorMap[%s]", error);
+	public final String toString() {
+		return String.format("OauthErrorMap[%s]", this.error);
 	}
 }

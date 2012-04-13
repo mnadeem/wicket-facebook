@@ -3,34 +3,34 @@ package com.nadeem.app.model;
 import java.io.Serializable;
 
 public class OAuthError implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 	private String code;
 	private String type;
 	private String message;
 
 
-	public String getCode() {
+	public final String getCode() {
 		return code;
 	}
-	public void setCode(String code) {
+	public final void setCode(final String code) {
 		this.code = code;
 	}
-	public String getType() {
+	public final String getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public final void setType(final String type) {
 		this.type = type;
 	}
-	public String getMessage() {
+	public final String getMessage() {
 		return message;
 	}
-	public void setMessage(String message) {
+	public final void setMessage(final String message) {
 		this.message = message;
 	}
 
 	@Override
-	public String toString() {
+	public final String toString() {
 		return String.format("OAuthError[%s , %s, %s ]", code, type, message);
 	}
 

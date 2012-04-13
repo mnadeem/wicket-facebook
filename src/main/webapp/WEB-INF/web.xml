@@ -21,15 +21,15 @@
  		<filter-class>org.apache.wicket.protocol.http.WicketFilter</filter-class>
 		<init-param>
 			<param-name>applicationClassName</param-name>
-			<param-value>com.nadeem.app.web.WicketApplication</param-value>
+			<param-value>com.nadeem.app.web.FacebookApplication</param-value>
  		</init-param>
  		<init-param>
  			<param-name>appKey</param-name>
- 			<param-value>{Your app key}</param-value>
+ 			<param-value>355784961124762</param-value>
  		</init-param>
  		<init-param>
  			<param-name>secret</param-name>
- 			<param-value>{Your app secret key}</param-value>
+ 			<param-value>f4cecac057e4c38e5ab1e3e90448fc2b</param-value>
  		</init-param>
  		<init-param>
  			<param-name>callback</param-name>

@@ -4,20 +4,20 @@ import org.scribe.builder.ServiceBuilder;
 import org.scribe.oauth.OAuthService;
 
 public class OAuthServiceProvider {
-	
+
 	private OAuthServiceConfig config;
-	
-	public OAuthServiceProvider(OAuthServiceConfig config) {
+
+	public OAuthServiceProvider(final OAuthServiceConfig config) {
 		this.config = config;
 	}
 
-	public OAuthService getService() {
-		System.out.println(config);
-		return new ServiceBuilder().provider(config.getApiClass())
-							.apiKey(config.getApiKey())
-						    .apiSecret(config.getApiSecret())
-						    .callback(config.getCallback())
+	public final OAuthService getService() {
+
+		return new ServiceBuilder().provider(this.config.getApiClass())
+							.apiKey(this.config.getApiKey())
+						    .apiSecret(this.config.getApiSecret())
+						    .callback(this.config.getCallback())
 						    .build();
 	}
-	
+
 }

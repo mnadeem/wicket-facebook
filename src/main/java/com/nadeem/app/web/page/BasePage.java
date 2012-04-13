@@ -15,7 +15,7 @@ public class BasePage extends WebPage {
 	
 	public User getLoggedInUser() {
 		if (getApplicationSession().getUser() == null) {
-			getApplicationSession().setUser(getApplicationSession().getFacebookClient().getFacebookUser());
+			getApplicationSession().setUser(getApplicationSession().getFacebookClient().getLoggedInUser());
 		}
 		return getApplicationSession().getUser();
 	}

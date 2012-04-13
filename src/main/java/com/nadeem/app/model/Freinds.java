@@ -6,16 +6,16 @@ public class Freinds {
 
 	private List<Friend> data;
 
-	public List<Friend> getData() {
+	public final List<Friend> getData() {
 		return data;
 	}
 
-	public void setData(List<Friend> data) {
+	public final void setData(final List<Friend> data) {
 		this.data = data;
 	}
 
 	@Override
-	public String toString() {
+	public final String toString() {
 		return String.format("Freinds[%s]", data);
 	}
 }

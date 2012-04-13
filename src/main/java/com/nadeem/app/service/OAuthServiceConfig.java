@@ -3,17 +3,16 @@ package com.nadeem.app.service;
 import org.scribe.builder.api.Api;
 
 public class OAuthServiceConfig {
-	
 	private String apiKey;
 	private String apiSecret;
 	private String callback;
 	private Class<? extends Api> apiClass;
-	
+
 	public OAuthServiceConfig() {
 	}
-	
-	public OAuthServiceConfig(String apiKey, String apiSecret, String callback,
-            Class<? extends Api> apiClass) {
+
+	public OAuthServiceConfig(final String apiKey, final String apiSecret, final String callback,
+            final Class<? extends Api> apiClass) {
 	    super();
 	    this.apiKey = apiKey;
 	    this.apiSecret = apiSecret;
@@ -21,73 +20,44 @@ public class OAuthServiceConfig {
 	    this.apiClass = apiClass;
     }
 
-
-
-	/**
-     * @return the apiKey
-     */
-    public String getApiKey() {
+    public final String getApiKey() {
     	return apiKey;
     }
 
-	/**
-     * @param apiKey the apiKey to set
-     */
-    public void setApiKey(String apiKey) {
+    public final void setApiKey(final String apiKey) {
     	this.apiKey = apiKey;
     }
 
-	/**
-     * @return the apiSecret
-     */
-    public String getApiSecret() {
+    public final String getApiSecret() {
     	return apiSecret;
     }
 
-	/**
-     * @param apiSecret the apiSecret to set
-     */
-    public void setApiSecret(String apiSecret) {
+    public final void setApiSecret(final String apiSecret) {
     	this.apiSecret = apiSecret;
     }
 
-	/**
-     * @return the callback
-     */
-    public String getCallback() {
+    public final String getCallback() {
     	return callback;
     }
 
-	/**
-     * @param callback the callback to set
-     */
-    public void setCallback(String callback) {
+    public final void setCallback(final String callback) {
     	this.callback = callback;
     }
 
-	/**
-     * @return the apiClass
-     */
-    public Class<? extends Api> getApiClass() {
+
+    public final Class<? extends Api> getApiClass() {
     	return apiClass;
     }
-    
-	/**
-     * @param apiClass the apiClass to set
-     */
-    public void setApiClass(Class<? extends Api> apiClass) {
+
+    public final void setApiClass(final Class<? extends Api> apiClass) {
     	this.apiClass = apiClass;
     }
-	
-	/* (non-Javadoc)
-     * @see java.lang.Object#toString()
-     */
+
     @Override
-    public String toString() {
+	public final String toString() {
 	    return "OAuthServiceConfig [apiKey=" + apiKey + ", apiSecret="
 	            + apiSecret + ", callback=" + callback + ", apiClass="
 	            + apiClass + "]";
     }
-	
-	
+
 }

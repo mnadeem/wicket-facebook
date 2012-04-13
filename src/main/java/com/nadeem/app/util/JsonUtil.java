@@ -7,9 +7,9 @@ import com.google.gson.stream.JsonReader;
 import com.nadeem.app.model.OAuthError;
 
 public class JsonUtil {
-	
-	public static OAuthError buildOauthError(String json){
-		JsonReader reader= new JsonReader(new StringReader(json));
+
+	public static OAuthError buildOauthError(final String json){
+		JsonReader reader = new JsonReader(new StringReader(json));
 		OAuthError newObject = new OAuthError();
 
 		try {
@@ -26,7 +26,7 @@ public class JsonUtil {
 					newObject.setType(reader.nextString());
 				}  else if (name.equals("code")) {
 					newObject.setCode(reader.nextString());
-				}else {
+				} else {
 					reader.skipValue();
 				}
 			}
@@ -36,15 +36,14 @@ public class JsonUtil {
 		} finally {
 			closeQuietly(reader);
 		}
-		return newObject;		
+		return newObject;
 	}
 
-	private static void closeQuietly(JsonReader reader) {
+	private static void closeQuietly(final JsonReader reader) {
 		try {
 			reader.close();
 		} catch (IOException e) {
-			
+
 		}
 	}
-
 }
