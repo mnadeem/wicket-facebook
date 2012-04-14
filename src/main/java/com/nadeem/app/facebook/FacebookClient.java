@@ -6,7 +6,7 @@ import org.scribe.model.Verb;
 
 import com.google.gson.Gson;
 import com.nadeem.app.exception.FacebookException;
-import com.nadeem.app.model.FacebookErrorMap;
+import com.nadeem.app.model.FacebookError;
 import com.nadeem.app.model.Friends;
 import com.nadeem.app.model.User;
 import com.nadeem.app.service.FacebookService;
@@ -43,6 +43,7 @@ public class FacebookClient {
 		if (oauthResponse.isSuccessful()) {
 			return new Gson().fromJson(oauthResponse.getBody(), classOfT);
 		}
-		throw new FacebookException(new Gson().fromJson(oauthResponse.getBody(), FacebookErrorMap.class).buildOAuthError());
+		FacebookData root = new FacebookData(oauthResponse.getBody());
+		throw new FacebookException(new Gson().fromJson(root.getError(), FacebookError.class));
 	}
 }
