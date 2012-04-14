@@ -42,7 +42,6 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("User[%s , %s, %s , %s]", userId, firstName, lastName, oauthVerifier);
+		return String.format("User[userId=%s , firstName=%s,lastName=%s]", userId, firstName, lastName);
 	}
-
 }

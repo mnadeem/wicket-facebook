@@ -7,6 +7,7 @@ public class Friend implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String name;
+
 	public String getId() {
 		return id;
 	}
@@ -22,6 +23,6 @@ public class Friend implements Serializable {
 
 	@Override
 	public String toString() {
-		return String.format("Freind[%s , %s]", id, name);
+		return String.format("Freind[id=%s , name=%s]", id, name);
 	}
 }

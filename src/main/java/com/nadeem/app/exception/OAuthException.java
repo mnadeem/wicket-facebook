@@ -26,5 +26,4 @@ public class OAuthException extends RuntimeException {
 		}
 		return false;
 	}
-
 }

@@ -2,7 +2,18 @@ package com.nadeem.app.model;
 
 import java.io.Serializable;
 import java.util.Map;
-
+/**
+ * Facebook returns error in the following format
+ * {
+	"error":{
+				"message":"Error validating access token: User 24324234234 has not authorized application 5453453453.",
+				"type":"OAuthException",
+				"code":190
+			}
+	}
+ *  
+ *
+ */
 public class OauthErrorMap implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -22,7 +33,7 @@ public class OauthErrorMap implements Serializable {
 
 			return oAuthError;
 		}
-		return null;
+		return new OAuthError();
 	}
 
 	@Override

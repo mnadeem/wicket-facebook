@@ -31,7 +31,7 @@ public class OAuthError implements Serializable {
 
 	@Override
 	public final String toString() {
-		return String.format("OAuthError[%s , %s, %s ]", code, type, message);
+		return String.format("OAuthError[code=%s , type=%s, message=%s ]", code, type, message);
 	}
 
 }
