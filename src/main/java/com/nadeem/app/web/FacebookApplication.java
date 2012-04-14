@@ -13,17 +13,16 @@ import org.apache.wicket.authorization.UnauthorizedInstantiationException;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WebRequest;
-import org.scribe.oauth.OAuthService;
 
 import com.nadeem.app.exception.FailedLoginException;
 import com.nadeem.app.facebook.FacebookClient;
+import com.nadeem.app.service.FacebookService;
 import com.nadeem.app.service.FacebookServiceConfig;
-import com.nadeem.app.service.FacebookServiceProvider;
 import com.nadeem.app.web.page.WelcomePage;
 
 public class FacebookApplication extends WebApplication implements IUnauthorizedComponentInstantiationListener {
 
-	private OAuthService facebookService;
+	private FacebookService facebookService;
 
 	public FacebookApplication() 	{
 
@@ -43,17 +42,12 @@ public class FacebookApplication extends WebApplication implements IUnauthorized
 	protected final void init() {
 		super.init();
 
-		initOauthService();
+		facebookService = new FacebookService(new FacebookServiceConfig(getAppKey(), getSecret(), getCallback()));
 
 		getSecuritySettings().setAuthorizationStrategy(new FacebookPageAuthorizationStrategy());
 		getSecuritySettings().setUnauthorizedComponentInstantiationListener(this);
 
 		mountFreindlyUrls();
-	}
-
-	private void initOauthService() {
-		FacebookServiceProvider provider 	= new FacebookServiceProvider(new FacebookServiceConfig(getAppKey(), getSecret(), getCallback()));
-		this.facebookService 				= provider.getService();
 	}
 
 	private void mountFreindlyUrls() {
@@ -106,10 +100,10 @@ public class FacebookApplication extends WebApplication implements IUnauthorized
 	}
 
 	private void forceLogin(final Page page) {
-		throw new RedirectToUrlException(this.facebookService.getAuthorizationUrl(FacebookClient.EMPTY_TOKEN));
+		throw new RedirectToUrlException(getFacebookService().getAuthorizationUrl());
 	}
 
-	public final OAuthService getOauthService() {
-		return this.facebookService;
+	public FacebookService getFacebookService() {
+		return facebookService;
 	}
 }

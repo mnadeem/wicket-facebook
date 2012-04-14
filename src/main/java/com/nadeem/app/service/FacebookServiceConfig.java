@@ -12,6 +12,7 @@ public class FacebookServiceConfig implements Serializable {
 	private String apiKey;
 	private String apiSecret;
 	private String callback;
+	private String scope;
 
 	public FacebookServiceConfig() {
 
@@ -53,7 +54,15 @@ public class FacebookServiceConfig implements Serializable {
     	return FacebookApi.class;
     }
 
-    @Override
+    public String getScope() {
+		return scope;
+	}
+
+	public void setScope(String scope) {
+		this.scope = scope;
+	}
+
+	@Override
 	public final String toString() {
     	return String.format("FacebookServiceConfig[apiKey=%s , apiSecret=%s, callback=%s]", this.apiKey, this.apiSecret, this.callback);
     }

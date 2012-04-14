@@ -8,7 +8,6 @@ import org.apache.wicket.protocol.http.WebRequest;
 import org.apache.wicket.protocol.http.WebRequestCycle;
 
 import com.nadeem.app.exception.FacebookException;
-import com.nadeem.app.facebook.FacebookClient;
 
 public class FacebookRequestcycle extends WebRequestCycle {
 
@@ -19,7 +18,7 @@ public class FacebookRequestcycle extends WebRequestCycle {
 	@Override
 	public final Page onRuntimeException(final Page page, final RuntimeException e) {
 		if (e instanceof FacebookException && ((FacebookException) e).isOAuthException()) {
-			throw new RedirectToUrlException(((FacebookApplication) getApplication()).getOauthService().getAuthorizationUrl(FacebookClient.EMPTY_TOKEN));
+			throw new RedirectToUrlException(((FacebookApplication) getApplication()).getFacebookService().getAuthorizationUrl());
 		} else {
 			return super.onRuntimeException(page, e);
 		}
