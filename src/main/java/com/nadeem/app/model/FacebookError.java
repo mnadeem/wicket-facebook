@@ -2,7 +2,7 @@ package com.nadeem.app.model;
 
 import java.io.Serializable;
 
-public class OAuthError implements Serializable {
+public class FacebookError implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String code;
@@ -31,7 +31,6 @@ public class OAuthError implements Serializable {
 
 	@Override
 	public final String toString() {
-		return String.format("OAuthError[code=%s , type=%s, message=%s ]", code, type, message);
+		return String.format("FacebookError[code=%s , type=%s, message=%s ]", code, type, message);
 	}
-
 }

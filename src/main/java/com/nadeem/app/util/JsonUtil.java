@@ -4,18 +4,17 @@ import java.io.IOException;
 import java.io.StringReader;
 
 import com.google.gson.stream.JsonReader;
-import com.nadeem.app.model.OAuthError;
+import com.nadeem.app.model.FacebookError;
 
 public class JsonUtil {
 
-	public static OAuthError buildOauthError(final String json){
-		JsonReader reader = new JsonReader(new StringReader(json));
-		OAuthError newObject = new OAuthError();
+	public static FacebookError buildFacebookError(final String json){
+		JsonReader reader 		= new JsonReader(new StringReader(json));
+		FacebookError newObject = new FacebookError();
 
 		try {
 			reader.beginObject();
 			reader.nextName();
-
 
 			reader.beginObject();
 			while (reader.hasNext()) {

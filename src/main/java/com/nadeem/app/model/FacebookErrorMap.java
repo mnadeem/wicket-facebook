@@ -14,7 +14,7 @@ import java.util.Map;
  *  
  *
  */
-public class OauthErrorMap implements Serializable {
+public class FacebookErrorMap implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private Map<String, String> error = null;
@@ -24,20 +24,20 @@ public class OauthErrorMap implements Serializable {
 		this.error = error;
 	}
 
-	public final OAuthError buildOAuthError() {
+	public final FacebookError buildOAuthError() {
 		if (this.error != null) {
-			OAuthError oAuthError = new OAuthError();
+			FacebookError oAuthError = new FacebookError();
 			oAuthError.setCode(this.error.get("code"));
 			oAuthError.setMessage(this.error.get("message"));
 			oAuthError.setType(this.error.get("type"));
 
 			return oAuthError;
 		}
-		return new OAuthError();
+		return new FacebookError();
 	}
 
 	@Override
 	public final String toString() {
-		return String.format("OauthErrorMap[%s]", this.error);
+		return String.format("FacebookErrorMap[%s]", this.error);
 	}
 }

@@ -42,6 +42,7 @@ public class FacebookApplication extends WebApplication implements IUnauthorized
 	@Override
 	protected final void init() {
 		super.init();
+
 		initOauthService();
 
 		getSecuritySettings().setAuthorizationStrategy(new FacebookPageAuthorizationStrategy());
@@ -49,7 +50,6 @@ public class FacebookApplication extends WebApplication implements IUnauthorized
 
 		mountFreindlyUrls();
 	}
-
 
 	private void initOauthService() {
 		FacebookServiceProvider provider 	= new FacebookServiceProvider(new FacebookServiceConfig(getAppKey(), getSecret(), getCallback()));

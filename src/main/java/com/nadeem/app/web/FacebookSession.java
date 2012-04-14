@@ -29,11 +29,9 @@ public class FacebookSession extends WebSession {
 		this.user = user;
 	}
 
-
 	public final FacebookClient getFacebookClient() {
 		return this.facebookClient;
 	}
-
 
 	public final void setFacebookClient(final FacebookClient facebookClient) {
 		this.facebookClient = facebookClient;

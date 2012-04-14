@@ -8,9 +8,9 @@ import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
 import com.google.gson.Gson;
-import com.nadeem.app.exception.OAuthException;
+import com.nadeem.app.exception.FacebookException;
 import com.nadeem.app.model.Friends;
-import com.nadeem.app.model.OauthErrorMap;
+import com.nadeem.app.model.FacebookErrorMap;
 import com.nadeem.app.model.User;
 
 public class FacebookClient {
@@ -48,6 +48,6 @@ public class FacebookClient {
 		if (oauthResponse.isSuccessful()) {
 			return new Gson().fromJson(oauthResponse.getBody(), classOfT);
 		}
-		throw new OAuthException(new Gson().fromJson(oauthResponse.getBody(), OauthErrorMap.class).buildOAuthError());
+		throw new FacebookException(new Gson().fromJson(oauthResponse.getBody(), FacebookErrorMap.class).buildOAuthError());
 	}
 }
