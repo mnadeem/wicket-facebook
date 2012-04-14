@@ -1,6 +1,5 @@
 package com.nadeem.app.facebook;
 
-import org.scribe.model.OAuthRequest;
 import org.scribe.model.Response;
 import org.scribe.model.Token;
 import org.scribe.model.Verb;
@@ -13,9 +12,6 @@ import com.nadeem.app.model.User;
 import com.nadeem.app.service.FacebookService;
 
 public class FacebookClient {
-
-	private static final String FACEBOOK_GRAPH_API_URL = "https://graph.facebook.com";
-	public static final Token EMPTY_TOKEN 				= null;
 
 	private final FacebookService service;
 	private final Token accessToken;
@@ -39,7 +35,7 @@ public class FacebookClient {
 
 	public final <T> T fetch(final Verb how, final String what, final Class<T> classOfT) {
 
-		OAuthRequest oauthRequest 	= new OAuthRequest(how, FACEBOOK_GRAPH_API_URL + what);
+		FacebookRequest oauthRequest 	= new FacebookRequest(how, what);
 		service.signRequest(accessToken, oauthRequest);
 
 		Response oauthResponse = oauthRequest.send();
