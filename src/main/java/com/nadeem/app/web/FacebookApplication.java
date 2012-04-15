@@ -15,9 +15,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WebRequest;
 
 import com.nadeem.app.exception.FacebookException;
-import com.nadeem.app.exception.FailedLoginException;
 import com.nadeem.app.facebook.FacebookClient;
-import com.nadeem.app.facebook.FacebookParameterProvider;
 import com.nadeem.app.service.FacebookService;
 import com.nadeem.app.service.FacebookServiceConfig;
 import com.nadeem.app.web.page.RedirectToUrlPage;
@@ -81,14 +79,13 @@ public class FacebookApplication extends WebApplication implements IUnauthorized
 			try {
 				session.setFacebookClient(getSignedClient(page.getRequest()));
 
-			} catch (FailedLoginException fle) {
-				forceLogin(page);
-
-			} catch (FacebookException fle) {
-				forceLogin(page);
+			} catch (FacebookException exception) {
+				if (exception.isOAuthException()) {
+					forceLogin(page);
+				}
 
 			} catch (Exception e) {
-
+				e.printStackTrace();
 			}
 
 		} else {
@@ -97,13 +94,7 @@ public class FacebookApplication extends WebApplication implements IUnauthorized
 	}
 
 	private FacebookClient getSignedClient(final Request request) throws Exception {
-		String oauthVerifier = request.getParameter(FacebookParameterProvider.AUTH_CODE);
-		String signedRequest = request.getParameter(FacebookParameterProvider.SIGNED_REQUEST);
-		if (oauthVerifier != null || signedRequest != null) {
-			return new FacebookClient(this.facebookService, new WicketFacebookParameterProvider(request));
-		} else {
-			throw new FailedLoginException();
-		}
+		return new FacebookClient(this.facebookService, new WicketFacebookParameterProvider(request));
 	}
 
 	private void forceLogin(final Page page) {

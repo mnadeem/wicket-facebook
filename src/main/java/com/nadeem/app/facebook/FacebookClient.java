@@ -22,8 +22,10 @@ public class FacebookClient {
 
 		if (signedRequest != null) {
 			accessToken 	= service.extractAccessToken(signedRequest);
+		} else if (oauthVerifier != null) {
+			accessToken 	= service.getAccessToken(oauthVerifier);
 		} else {
-			accessToken = service.getAccessToken(oauthVerifier);
+			throw new FacebookException(new FacebookError("OAuthException")); 
 		}
 	}
 
