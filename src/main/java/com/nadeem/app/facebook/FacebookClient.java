@@ -15,9 +15,16 @@ public class FacebookClient {
 	private final FacebookService service;
 	private final FacebookToken accessToken;
 
-	public FacebookClient(final FacebookService newService, final String oauthVerifier) {
-		this.service 	= newService;
-		accessToken 	= service.getAccessToken(oauthVerifier);
+	public FacebookClient(final FacebookService newService, final FacebookParameterProvider paramProvider) throws Exception {
+		this.service 				= newService;
+		final String oauthVerifier 	= paramProvider.getParameter(FacebookParameterProvider.AUTH_CODE);
+		final String signedRequest 	= paramProvider.getParameter(FacebookParameterProvider.SIGNED_REQUEST);
+
+		if (signedRequest != null) {
+			accessToken 	= service.extractAccessToken(signedRequest);
+		} else {
+			accessToken = service.getAccessToken(oauthVerifier);
+		}
 	}
 
 	public final User getLoggedInUser() {

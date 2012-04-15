@@ -6,7 +6,7 @@ public class ErrorHelper {
 
 		Throwable rootCause = exception.getCause();
 
-		while (exception != null && rootCause.getCause() != null) {
+		while (exception != null && rootCause != null) {
 			rootCause = rootCause.getCause();
 		}
 		return rootCause;

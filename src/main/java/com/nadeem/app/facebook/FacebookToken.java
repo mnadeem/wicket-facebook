@@ -40,9 +40,9 @@ public class FacebookToken extends Token {
 	public final void setIssuedAt(final Long issuedAt) {
 		this.issuedAt = issuedAt;
 	}
-	
-	 @Override
-	  public String toString() {
-	    return String.format("FacebookToken[%s , %s]", getToken(), getRawResponse());
-	  }
+
+	@Override
+	public String toString() {
+		return String.format("FacebookToken[%s , %s]", getToken(), getRawResponse());
+	}
 }

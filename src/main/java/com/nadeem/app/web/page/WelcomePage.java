@@ -13,10 +13,10 @@ public class WelcomePage extends BasePage {
 
     public WelcomePage(final PageParameters parameters) {
     	super(parameters);
-    	
+
     	getSession().bind();
     	add(new Label("facebookUser", getLoggedInUser().getFirstName()));
-    	
+
     	add(newFriendsListView());
 
     }
@@ -29,8 +29,8 @@ public class WelcomePage extends BasePage {
 			@Override
 			protected void populateItem(ListItem<Friend> item) {
 				item.add(new Label("id", item.getModelObject().getId()));
-				item.add(new Label("name", item.getModelObject().getName()));	
-			}					
+				item.add(new Label("name", item.getModelObject().getName()));
+			}
 		};
 	}
 }

@@ -3,10 +3,10 @@ package com.nadeem.app.web;
 
 import org.apache.wicket.Component;
 import org.apache.wicket.Page;
-import org.apache.wicket.RedirectToUrlException;
 import org.apache.wicket.Request;
 import org.apache.wicket.RequestCycle;
 import org.apache.wicket.Response;
+import org.apache.wicket.RestartResponseException;
 import org.apache.wicket.Session;
 import org.apache.wicket.authorization.IUnauthorizedComponentInstantiationListener;
 import org.apache.wicket.authorization.UnauthorizedInstantiationException;
@@ -14,17 +14,20 @@ import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WebRequest;
 
+import com.nadeem.app.exception.FacebookException;
 import com.nadeem.app.exception.FailedLoginException;
 import com.nadeem.app.facebook.FacebookClient;
+import com.nadeem.app.facebook.FacebookParameterProvider;
 import com.nadeem.app.service.FacebookService;
 import com.nadeem.app.service.FacebookServiceConfig;
+import com.nadeem.app.web.page.RedirectToUrlPage;
 import com.nadeem.app.web.page.WelcomePage;
 
 public class FacebookApplication extends WebApplication implements IUnauthorizedComponentInstantiationListener {
 
 	private FacebookService facebookService;
 
-	public FacebookApplication() 	{
+	public FacebookApplication() {
 
 	}
 
@@ -78,32 +81,36 @@ public class FacebookApplication extends WebApplication implements IUnauthorized
 			try {
 				session.setFacebookClient(getSignedClient(page.getRequest()));
 
-
 			} catch (FailedLoginException fle) {
 				forceLogin(page);
 
+			} catch (FacebookException fle) {
+				forceLogin(page);
+
 			} catch (Exception e) {
-				e.printStackTrace();
+
 			}
+
 		} else {
 			throw new UnauthorizedInstantiationException(component.getClass());
 		}
 	}
 
-	private FacebookClient getSignedClient(final Request request) {
-		String oauthVerifier = request.getParameter("code");
-		if (oauthVerifier != null) {
-			return new FacebookClient(this.facebookService, oauthVerifier);
+	private FacebookClient getSignedClient(final Request request) throws Exception {
+		String oauthVerifier = request.getParameter(FacebookParameterProvider.AUTH_CODE);
+		String signedRequest = request.getParameter(FacebookParameterProvider.SIGNED_REQUEST);
+		if (oauthVerifier != null || signedRequest != null) {
+			return new FacebookClient(this.facebookService, new WicketFacebookParameterProvider(request));
 		} else {
 			throw new FailedLoginException();
 		}
 	}
 
 	private void forceLogin(final Page page) {
-		throw new RedirectToUrlException(getFacebookService().getAuthorizationUrl());
+		throw new RestartResponseException(new RedirectToUrlPage(getFacebookService().getAuthorizationUrl()));
 	}
 
-	public FacebookService getFacebookService() {
+	public final FacebookService getFacebookService() {
 		return facebookService;
 	}
 }

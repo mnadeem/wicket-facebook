@@ -9,8 +9,10 @@ import org.scribe.model.Token;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
+import com.nadeem.app.exception.FacebookException;
 import com.nadeem.app.facebook.FacebookData;
 import com.nadeem.app.facebook.FacebookToken;
+import com.nadeem.app.model.FacebookError;
 
 public class FacebookService {
 
@@ -50,14 +52,14 @@ public class FacebookService {
 			return null;
 		}
 
-		if (!dataSignedCorrectly(rawJsonData, decodedSignature)) {
+		if (!isSignatureValid(rawJsonData, decodedSignature)) {
 			//signature is not correct, possibly the data was tampered with
-			return null;
+			throw new FacebookException(new FacebookError("OAuthException"));
 		}
 
 		if (!facebookData.userHasAuthorizedTheApp()) {
 			//TODO: this is guest
-			return null;
+			throw new FacebookException(new FacebookError("OAuthException"));
 
 		} else {
 			//this is authorized user
@@ -73,7 +75,7 @@ public class FacebookService {
 		return new String(new Base64(true).decode(data.getBytes(UTF8)));
 	}
 
-	private boolean dataSignedCorrectly(final String encodedJsonData, final String decodedSignature) throws Exception {
+	private boolean isSignatureValid(final String encodedJsonData, final String decodedSignature) throws Exception {
 		String appSignature = signatureService.getSignature(encodedJsonData, this.config.getApiSecret());
 		return appSignature.equals(decodedSignature);
 	}

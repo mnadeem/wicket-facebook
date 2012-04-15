@@ -9,6 +9,20 @@ public class FacebookError implements Serializable {
 	private String type;
 	private String message;
 
+	public FacebookError() {
+
+	}
+
+	public FacebookError(final String type) {
+		this("", type, "");
+	}
+
+	public FacebookError(final String code, final String type, final String message) {
+		this.code = code;
+		this.type = type;
+		this.message = message;
+	}
+
 
 	public final String getCode() {
 		return code;
