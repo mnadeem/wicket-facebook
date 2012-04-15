@@ -18,7 +18,7 @@ import com.nadeem.app.facebook.FacebookToken;
 public class FacebookService {
 
 	private static final String HMAC_SHA256 = "HmacSHA256";
-	private static final String UTF_8 		= "UTF-8";
+	private static final String UTF8 		= "UTF-8";
 
 	public static final Token EMPTY_TOKEN 	= null;
 
@@ -52,7 +52,7 @@ public class FacebookService {
 			return null;
 		}
 
-		if (!dataSignedCorrectly(decodedJsonData, decodedSignature)) {
+		if (!dataSignedCorrectly(parsedSignedRequest[1], decodedSignature)) {
 			//signature is not correct, possibly the data was tampered with
 			return null;
 		}
@@ -72,7 +72,7 @@ public class FacebookService {
 	}
 
 	private String decode(String data) throws UnsupportedEncodingException {
-		return new String(Base64.decodeBase64(data.getBytes(UTF_8)));
+		return new String(new Base64(true).decode(data.getBytes(UTF8)));
 	}
 
 	private boolean dataSignedCorrectly(String decodedJsonData, String decodedSignature) throws Exception {
@@ -80,10 +80,10 @@ public class FacebookService {
 	}
 
 	private String hmacSHA256(String data, String appSeceretKey) throws Exception {
-		SecretKeySpec secretKey = new SecretKeySpec(appSeceretKey.getBytes(UTF_8), HMAC_SHA256);
+		SecretKeySpec secretKey = new SecretKeySpec(appSeceretKey.getBytes(UTF8), HMAC_SHA256);
 		Mac mac = Mac.getInstance(HMAC_SHA256);
 		mac.init(secretKey);
-		byte[] hmacData = mac.doFinal(data.getBytes(UTF_8));
+		byte[] hmacData = mac.doFinal(data.getBytes(UTF8));
 		return new String(hmacData);
 	}
 
