@@ -42,10 +42,9 @@ public class FacebookService {
 	public FacebookToken extractAccessToken(final String signedRequest) throws Exception {
 
 		String[] parsedSignedRequest= parse(signedRequest);
-		Base64 base64 				= new Base64(true);
 
-		String decodedSignature 	= decode(base64, parsedSignedRequest[0]);
-		String decodedJsonData 		= decode(base64, parsedSignedRequest[1]);
+		String decodedSignature 	= decode(parsedSignedRequest[0]);
+		String decodedJsonData 		= decode(parsedSignedRequest[1]);
 		FacebookData facebookData 	= new FacebookData(decodedJsonData);
 
 		if (!facebookData.isAlgorithmHMAC_SHA256()) {
@@ -72,8 +71,8 @@ public class FacebookService {
 		return signedRequest.split("\\.", 2);
 	}
 
-	private String decode(Base64 base64, String data) throws UnsupportedEncodingException {
-		return new String(base64.decode(data.getBytes(UTF_8)));
+	private String decode(String data) throws UnsupportedEncodingException {
+		return new String(Base64.decodeBase64(data.getBytes(UTF_8)));
 	}
 
 	private boolean dataSignedCorrectly(String decodedJsonData, String decodedSignature) throws Exception {
