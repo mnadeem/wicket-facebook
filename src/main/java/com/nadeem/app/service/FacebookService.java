@@ -13,6 +13,7 @@ import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
 import com.nadeem.app.facebook.FacebookData;
+import com.nadeem.app.facebook.FacebookToken;
 
 public class FacebookService {
 
@@ -38,7 +39,7 @@ public class FacebookService {
 						.build();
 	}
 
-	public Token extractAccessToken(final String signedRequest) throws Exception {
+	public FacebookToken extractAccessToken(final String signedRequest) throws Exception {
 
 		String[] parsedSignedRequest= parse(signedRequest);
 		Base64 base64 				= new Base64(true);
@@ -47,26 +48,24 @@ public class FacebookService {
 		String decodedJsonData 		= decode(base64, parsedSignedRequest[1]);
 		FacebookData facebookData 	= new FacebookData(decodedJsonData);
 
-		if(!facebookData.isAlgorithmHMAC_SHA256()) {
+		if (!facebookData.isAlgorithmHMAC_SHA256()) {
 			//TODO: unknown algorithm is used
 			return null;
 		}
 
-		if(!dataSignedCorrectly(decodedJsonData, decodedSignature)) {
+		if (!dataSignedCorrectly(decodedJsonData, decodedSignature)) {
 			//signature is not correct, possibly the data was tampered with
 			return null;
 		}
 
-		if(!facebookData.isUserAuthorizedApp()) {
+		if (!facebookData.userHasAuthorizedTheApp()) {
 			//TODO: this is guest
 			return null;
 
 		} else {
 			//this is authorized user
-			String oauthVerifier = facebookData.getAuthToken();
-			return getAccessToken(oauthVerifier);
+			return new FacebookToken(facebookData);
 		}
-
 	}
 
 	private String[] parse(final String signedRequest) {
@@ -89,8 +88,9 @@ public class FacebookService {
 		return new String(hmacData);
 	}
 
-	public Token getAccessToken(final String oauthVerifier) {
-		return oAuthService.getAccessToken(EMPTY_TOKEN,  new Verifier(oauthVerifier));
+	public FacebookToken getAccessToken(final String oauthVerifier) {
+		Token token = oAuthService.getAccessToken(EMPTY_TOKEN,  new Verifier(oauthVerifier));
+		return new FacebookToken(token, null, System.currentTimeMillis());
 	}
 
 	public void signRequest(Token accessToken, OAuthRequest request) {

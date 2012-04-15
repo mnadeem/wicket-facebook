@@ -1,7 +1,6 @@
 package com.nadeem.app.facebook;
 
 import org.scribe.model.Response;
-import org.scribe.model.Token;
 import org.scribe.model.Verb;
 
 import com.google.gson.Gson;
@@ -14,7 +13,7 @@ import com.nadeem.app.service.FacebookService;
 public class FacebookClient {
 
 	private final FacebookService service;
-	private final Token accessToken;
+	private final FacebookToken accessToken;
 
 	public FacebookClient(final FacebookService newService, final String oauthVerifier) {
 		this.service 	= newService;
@@ -44,6 +43,6 @@ public class FacebookClient {
 			return new Gson().fromJson(oauthResponse.getBody(), classOfT);
 		}
 		FacebookData root = new FacebookData(oauthResponse.getBody());
-		throw new FacebookException(new Gson().fromJson(root.getError(), FacebookError.class));
+		throw new FacebookException(new Gson().fromJson(root.error(), FacebookError.class));
 	}
 }

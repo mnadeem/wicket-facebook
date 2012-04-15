@@ -6,52 +6,64 @@ import com.google.gson.JsonParser;
 public class FacebookData {
 
 	private final JsonObject jsonObject;
-	
-	public FacebookData(String jsonData) {
+
+	public FacebookData(final String jsonData) {
 		this.jsonObject = new JsonParser().parse(jsonData).getAsJsonObject();
 	}
 
-	public JsonObject getError() {
+	public final Long issuedAt() {
+		return getAsLong("issued_at");
+	}
+
+	public final Long expires() {
+		return getAsLong("expires");
+	}
+
+	public final JsonObject error() {
 		return getAsJsonObject("error");
 	}
 
-	public boolean isAlgorithmHMAC_SHA256() {
-		return getAlgorithm().equals("HMAC-SHA256");
+	public final boolean isAlgorithmHMAC_SHA256() {
+		return algorithm().equals("HMAC-SHA256");
 	}
 
-	public String getAlgorithm() {
+	public final String algorithm() {
 		return getAsString("algorithm");
 	}
-	
-	public String getUserId() {
+
+	public final String userId() {
 		return getAsString("user_id");
 	}
-	
-	public boolean hasUserId() {
+
+	public final boolean hasUserId() {
 		return has("user_id");
 	}
-	
-	public boolean isUserAuthorizedApp() {
+
+	public final boolean userHasAuthorizedTheApp() {
 		return hasAuthToken();
 	}
 
-	public boolean hasAuthToken() {
+	public final boolean hasAuthToken() {
 		return has("oauth_token");
 	}
-	
-	public String getAuthToken() {
+
+	public final String authToken() {
 		return getAsString("oauth_token");
 	}
 
-	public JsonObject getAsJsonObject(String memberName) {
+	public final JsonObject getAsJsonObject(final String memberName) {
 		return jsonObject.get(memberName).getAsJsonObject();
 	}
 
-	public String getAsString(String memberName) {
+	public final String getAsString(final String memberName) {
 		return jsonObject.get(memberName).getAsString();
 	}
-	
-	public boolean has(String memberName) {
+
+	public final Long getAsLong(final String memberName) {
+		return jsonObject.get(memberName).getAsLong();
+	}
+
+	public final boolean has(final String memberName) {
 		return jsonObject.has(memberName);
 	}
 }
