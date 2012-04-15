@@ -4,6 +4,7 @@ import org.scribe.model.Response;
 import org.scribe.model.Verb;
 
 import com.google.gson.Gson;
+import com.nadeem.app.exception.ErrorType;
 import com.nadeem.app.exception.FacebookException;
 import com.nadeem.app.model.FacebookError;
 import com.nadeem.app.model.Friends;
@@ -25,7 +26,7 @@ public class FacebookClient {
 		} else if (oauthVerifier != null) {
 			accessToken 	= service.getAccessToken(oauthVerifier);
 		} else {
-			throw new FacebookException(new FacebookError("OAuthException")); 
+			throw new FacebookException(ErrorType.AUTHERROR); 
 		}
 	}
 

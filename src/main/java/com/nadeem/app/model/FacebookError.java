@@ -2,6 +2,8 @@ package com.nadeem.app.model;
 
 import java.io.Serializable;
 
+import com.nadeem.app.exception.ErrorType;
+
 public class FacebookError implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -23,7 +25,9 @@ public class FacebookError implements Serializable {
 		this.message = message;
 	}
 
-
+	public ErrorType getErrorType() {
+		return ErrorType.getErrorType(type);
+	}
 	public final String getCode() {
 		return code;
 	}

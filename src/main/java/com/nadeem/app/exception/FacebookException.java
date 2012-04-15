@@ -6,10 +6,16 @@ public class FacebookException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	private FacebookError facebookError;
+	private ErrorType errorType;
 
 	public FacebookException(final FacebookError facebookError) {
 		super(facebookError.getMessage());
-		this.facebookError = facebookError;
+		this.facebookError 	= facebookError;
+		this.errorType		= facebookError.getErrorType();
+	}
+
+	public FacebookException(ErrorType errorType) {
+		this.errorType = errorType;
 	}
 
 	public final FacebookError getoFacebookError() {
@@ -17,7 +23,7 @@ public class FacebookException extends RuntimeException {
 	}
 
 	public final boolean isOAuthException() {
-		if (facebookError != null && "OAuthException".equalsIgnoreCase(facebookError.getType())) {
+		if (errorType != null && ErrorType.AUTHERROR.equals(errorType)) {
 			return true;
 		}
 		return false;

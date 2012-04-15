@@ -9,10 +9,10 @@ import org.scribe.model.Token;
 import org.scribe.model.Verifier;
 import org.scribe.oauth.OAuthService;
 
+import com.nadeem.app.exception.ErrorType;
 import com.nadeem.app.exception.FacebookException;
 import com.nadeem.app.facebook.FacebookData;
 import com.nadeem.app.facebook.FacebookToken;
-import com.nadeem.app.model.FacebookError;
 
 public class FacebookService {
 
@@ -48,19 +48,17 @@ public class FacebookService {
 		FacebookData facebookData 	= new FacebookData(decodedJsonData);
 
 		if (!facebookData.isAlgorithmHMAC_SHA256()) {
-			//TODO: unknown algorithm is used
-			return null;
+			throw new IllegalArgumentException("Unknown Algorithm " + facebookData.algorithm());
 		}
 
 		if (!isSignatureValid(rawJsonData, decodedSignature)) {
 			//signature is not correct, possibly the data was tampered with
-			throw new FacebookException(new FacebookError("OAuthException"));
+			throw new FacebookException(ErrorType.AUTHERROR);
 		}
 
 		if (!facebookData.userHasAuthorizedTheApp()) {
-			//TODO: this is guest
-			throw new FacebookException(new FacebookError("OAuthException"));
-
+			//this is guest
+			throw new FacebookException(ErrorType.AUTHERROR);
 		} else {
 			//this is authorized user
 			return new FacebookToken(facebookData);
