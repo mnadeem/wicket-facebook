@@ -26,13 +26,12 @@ public class ErrorHelper {
 
 		Throwable cause = ErrorHelper.getRootCause(exception);
 
-		if (cause != null && cause instanceof FacebookException && ((FacebookException)cause).isOAuthException()) {
+		if (isFacebookAuthException(cause)) {
 			return true;
 		}
 
 		if (cause instanceof InvocationTargetException && ((InvocationTargetException) cause).getTargetException() !=null) {
-			Throwable targetEx= ((InvocationTargetException) cause).getTargetException();
-			if (targetEx instanceof FacebookException && ((FacebookException) targetEx).isOAuthException()) {
+			if (isFacebookAuthException(((InvocationTargetException) cause).getTargetException())) {
 				return true;
 			}
 		}
