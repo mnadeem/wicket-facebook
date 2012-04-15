@@ -20,7 +20,7 @@ public class ErrorHelper {
 
 	public static boolean isRootCauseFacebookAuthException(final RuntimeException exception) {
 
-		if (exception instanceof FacebookException && ((FacebookException) exception).isOAuthException()) {
+		if (isFacebookAuthException(exception)) {
 			return true;
 		}
 
