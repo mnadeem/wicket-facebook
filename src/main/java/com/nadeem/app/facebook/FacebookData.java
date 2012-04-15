@@ -66,4 +66,9 @@ public class FacebookData {
 	public final boolean has(final String memberName) {
 		return jsonObject.has(memberName);
 	}
+
+	@Override
+	public String toString() {
+		return jsonObject.toString();
+	}
 }
