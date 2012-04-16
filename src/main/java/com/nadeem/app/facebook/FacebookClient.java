@@ -4,7 +4,6 @@ import org.scribe.model.Response;
 import org.scribe.model.Verb;
 
 import com.google.gson.Gson;
-import com.nadeem.app.exception.ErrorType;
 import com.nadeem.app.exception.FacebookException;
 import com.nadeem.app.model.FacebookError;
 import com.nadeem.app.model.Friends;
@@ -16,18 +15,9 @@ public class FacebookClient {
 	private final FacebookService service;
 	private final FacebookToken accessToken;
 
-	public FacebookClient(final FacebookService newService, final FacebookParameterProvider paramProvider) throws Exception {
-		this.service 				= newService;
-		final String oauthVerifier 	= paramProvider.getParameter(FacebookParameterProvider.AUTH_CODE);
-		final String signedRequest 	= paramProvider.getParameter(FacebookParameterProvider.SIGNED_REQUEST);
-
-		if (signedRequest != null) {
-			accessToken 	= service.extractAccessToken(signedRequest);
-		} else if (oauthVerifier != null) {
-			accessToken 	= service.getAccessToken(oauthVerifier);
-		} else {
-			throw new FacebookException(ErrorType.AUTHERROR); 
-		}
+	public FacebookClient(final FacebookService newService, final FacebookToken facebookToken) {
+		this.service 		= newService;
+		this.accessToken	= facebookToken;
 	}
 
 	public final User getLoggedInUser() {

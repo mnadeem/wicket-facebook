@@ -29,7 +29,7 @@ public class BasePage extends WebPage {
 		return (FacebookApplication) super.getApplication();
 	}
 
-	public FacebookClient getFacebookClient(){
-		return getApplicationSession().getFacebookClient();
+	public FacebookClient getFacebookClient() {
+		return new FacebookClient(getWebApplication().getFacebookService(), getApplicationSession().getFacebookToken());
 	}
 }

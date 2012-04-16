@@ -15,7 +15,8 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WebRequest;
 
 import com.nadeem.app.exception.FacebookException;
-import com.nadeem.app.facebook.FacebookClient;
+import com.nadeem.app.facebook.FacebookToken;
+import com.nadeem.app.facebook.FacebookTokenExtractor;
 import com.nadeem.app.service.FacebookService;
 import com.nadeem.app.service.FacebookServiceConfig;
 import com.nadeem.app.web.page.RedirectToUrlPage;
@@ -24,6 +25,7 @@ import com.nadeem.app.web.page.WelcomePage;
 public class FacebookApplication extends WebApplication implements IUnauthorizedComponentInstantiationListener {
 
 	private FacebookService facebookService;
+	private FacebookTokenExtractor tokenExtractor;
 
 	public FacebookApplication() {
 
@@ -44,6 +46,7 @@ public class FacebookApplication extends WebApplication implements IUnauthorized
 		super.init();
 
 		facebookService = new FacebookService(new FacebookServiceConfig(getAppKey(), getSecret(), getCallback()));
+		tokenExtractor	= new FacebookTokenExtractor(facebookService);
 
 		getSecuritySettings().setAuthorizationStrategy(new FacebookPageAuthorizationStrategy());
 		getSecuritySettings().setUnauthorizedComponentInstantiationListener(this);
@@ -77,7 +80,9 @@ public class FacebookApplication extends WebApplication implements IUnauthorized
 
 			FacebookSession session = (FacebookSession) page.getSession();
 			try {
-				session.setFacebookClient(getSignedClient(page.getRequest()));
+				 
+				FacebookToken facebookToken = tokenExtractor.extract( new WicketFacebookParameterProvider(page.getRequest()));
+				session.setFacebookToken(facebookToken);
 
 			} catch (FacebookException exception) {
 				if (exception.isOAuthException()) {
@@ -85,16 +90,12 @@ public class FacebookApplication extends WebApplication implements IUnauthorized
 				}
 
 			} catch (Exception e) {
-				e.printStackTrace();
+
 			}
 
 		} else {
 			throw new UnauthorizedInstantiationException(component.getClass());
 		}
-	}
-
-	private FacebookClient getSignedClient(final Request request) throws Exception {
-		return new FacebookClient(this.facebookService, new WicketFacebookParameterProvider(request));
 	}
 
 	private void forceLogin(final Page page) {
