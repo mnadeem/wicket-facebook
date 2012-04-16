@@ -11,6 +11,7 @@ public class FacebookSession extends WebSession {
 	private static final long serialVersionUID = 1L;
 
 	private User user;
+	//TODO: Store FacebookToken instead
 	private FacebookClient facebookClient;
 
 	public FacebookSession(final Request request) {
