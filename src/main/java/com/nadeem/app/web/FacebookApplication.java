@@ -15,10 +15,11 @@ import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.protocol.http.WebRequest;
 
 import com.nadeem.app.exception.FacebookException;
+import com.nadeem.app.facebook.FacebookServiceConfig;
 import com.nadeem.app.facebook.FacebookToken;
 import com.nadeem.app.facebook.FacebookTokenExtractor;
 import com.nadeem.app.service.FacebookService;
-import com.nadeem.app.service.FacebookServiceConfig;
+import com.nadeem.app.service.impl.FacebookServiceImpl;
 import com.nadeem.app.web.page.RedirectToUrlPage;
 import com.nadeem.app.web.page.WelcomePage;
 
@@ -45,7 +46,7 @@ public class FacebookApplication extends WebApplication implements IUnauthorized
 	protected final void init() {
 		super.init();
 
-		facebookService = new FacebookService(new FacebookServiceConfig(getAppKey(), getSecret(), getCallback()));
+		facebookService = new FacebookServiceImpl(new FacebookServiceConfig(getAppKey(), getSecret(), getCallback()));
 		tokenExtractor	= new FacebookTokenExtractor(facebookService);
 
 		getSecuritySettings().setAuthorizationStrategy(new FacebookPageAuthorizationStrategy());

@@ -1,4 +1,4 @@
-package com.nadeem.app.service;
+package com.nadeem.app.facebook;
 
 import java.io.Serializable;
 

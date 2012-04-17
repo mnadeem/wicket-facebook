@@ -1,4 +1,4 @@
-package com.nadeem.app.service;
+package com.nadeem.app.facebook;
 
 import org.scribe.builder.ServiceBuilder;
 import org.scribe.oauth.OAuthService;

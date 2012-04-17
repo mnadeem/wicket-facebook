@@ -1,11 +1,13 @@
-package com.nadeem.app.service;
+package com.nadeem.app.service.impl;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.scribe.exceptions.OAuthSignatureException;
 
-public class HMACSha256SignatureService {
+import com.nadeem.app.service.SignatureService;
+
+public class HMACSha256SignatureServiceImpl implements SignatureService {
 
 	private static final String CHAR_ENCODING 	= "UTF-8";
 	private static final String METHOD 			= "HmacSHA256";

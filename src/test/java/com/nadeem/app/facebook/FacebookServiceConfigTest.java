@@ -1,6 +1,4 @@
-package com.nadeem.app.service;
-
-import static org.junit.Assert.*;
+package com.nadeem.app.facebook;
 
 import org.junit.Test;
 
